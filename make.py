@@ -17,12 +17,12 @@ assets = pathlib.Path(IMAGE_DIR)
 contents = ""
 for p in assets.glob("**/*"):
     _path = str(p)
-    # _path = str(p).replace(IMAGE_DIR, "")
+    _path = str(p).replace(IMAGE_DIR, "")
     if re.match(r".*\.(png|jpeg|jpg|ico|svg|gif)$", _path):
         contents += f"""
         <li>
-            <a href="/{_path}">
-                <img src="/{_path}" width="150px">
+            <a href="{_path}">
+                <img src="{_path}" width="150px">
                 <span class='uk-padding'>{_path}</span>
             </a>
         </li>
