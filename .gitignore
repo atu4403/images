@@ -63,5 +63,5 @@ target/
 #Ipython Notebook
 .ipynb_checkpoints
 .DS_STORE
-memo.md
+memo*.md
 assets/index.html
