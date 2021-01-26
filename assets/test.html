@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>atu4403-images</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.3/css/uikit.min.css"
+    />
+  </head>
+  <body class="uk-container">
+    <h1>atu4403 images</h1>
+    <input type="button" value="button" id="pasteButton" />
+    <canvas id="uploadCanvas"> </canvas>
+    <script>
+      document
+        .getElementById('pasteButton')
+        .addEventListener('click', function () {
+          navigator.clipboard.read().then(function (data) {
+            for (let i = 0; i < data.length; i++) {
+              const img = data[i];
+              console.log(img);
+              for (const type of img.types) {
+                if (type.indexOf('image') != -1) {
+                  img.getType(type).then(function (blob) {
+                    const img = new Image();
+                    console.log(img);
+                    img.onload = function () {
+                      fetch('/', {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'image/png',
+                        },
+                        body: blob,
+                      })
+                        .then(() => console.log('Form successfully submitted'))
+                        .catch((error) => alert(error));
+                      const uploadCanvas = document.getElementById(
+                        'uploadCanvas'
+                      );
+                      uploadCanvas.width = img.width;
+                      uploadCanvas.height = img.height;
+                      uploadCanvas
+                        .getContext('2d')
+                        .drawImage(
+                          img,
+                          0,
+                          0,
+                          uploadCanvas.width,
+                          uploadCanvas.height
+                        );
+                    };
+                    img.src = URL.createObjectURL(blob);
+                  });
+                }
+              }
+            }
+          });
+        });
+    </script>
+  </body>
+</html>
