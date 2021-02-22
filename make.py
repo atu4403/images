@@ -20,7 +20,7 @@ paths = sorted(assets.glob("**/*"), key=os.path.getmtime, reverse=True)
 for p in paths:
     _path = str(p)
     _path = str(p).replace(IMAGE_DIR, "")
-    if re.match(r".*\.(png|jpeg|jpg|ico|svg|gif)$", _path):
+    if re.match(r".*\.(png|jpeg|jpg|ico|svg|gif)$", _path, re.IGNORECASE):
         contents += f"""
         <li>
             <a href="{_path}">
